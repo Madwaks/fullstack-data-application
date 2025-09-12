@@ -9,15 +9,15 @@ app = FastAPI()
 # -----------------------------
 @app.get("/hello")
 def hello_world():
-    return {"message": "Hello, API World!"}
+    pass
 
 
 # -----------------------------
 # Exercise 2 – Path Parameters
 # -----------------------------
-@app.get("/greet/{name}")
-def greet_user(name: str):
-    return {"message": f"Hello {name}"}
+@app.get("/hello/{name}")
+def hello_user(name: str):
+    pass
 
 
 # -----------------------------
@@ -25,7 +25,8 @@ def greet_user(name: str):
 # -----------------------------
 @app.get("/square")
 def square(number: int):
-    return {"result": number * number}
+    # TODO: return {"result": number * number}
+    pass
 
 
 # -----------------------------
@@ -38,35 +39,45 @@ class Numbers(BaseModel):
 
 @app.post("/sum")
 def sum_numbers(payload: Numbers):
-    return {"result": payload.a + payload.b}
+    # TODO: return {"result": payload.a + payload.b}
+    pass
 
 
 # -----------------------------
-# Exercise 5 – Simple CRUD (in-memory list)
+# Exercise 5 – Path + Query Together
+# -----------------------------
+@app.get("/items/{item_id}")
+def get_item_with_details(item_id: int, details: bool = False):
+    # TODO:
+    # if details:
+    #    return {"item_id": item_id, "description": "More details here"}
+    # else:
+    #    return {"item_id": item_id}
+    pass
+
+
+# -----------------------------
+# Exercise 6 – Simple CRUD (in-memory list)
 # -----------------------------
 items = []  # in-memory store
 
 
-class Item(BaseModel):
-    name: str
-    value: int
-
-
-@app.get("/crud/items", response_model=list[Item])
+@app.get("/crud/items")
 def list_items():
-    return [item for item in items]
+    # TODO: return all items
+    pass
 
 
 @app.post("/crud/items")
-def create_item(item: Item):
-    items.append(item)
-    return item
+def create_item(name: str):
+    # TODO: append to list and return item
+    pass
 
 
 @app.delete("/crud/items/{item_id}")
 def delete_item(item_id: int):
-    item = items.pop(item_id)
-    return item
+    # TODO: remove item by index
+    pass
 
 
 # -----------------------------
