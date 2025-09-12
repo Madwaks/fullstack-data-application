@@ -48,7 +48,3 @@ Goal: Learn to raise HTTP exceptions (HTTPException).
 	•	Pydantic models
 	•	CRUD-like patterns in memory
 	•	Error handling & status codes
-
-⸻
-
-Would you like me to also write the starter code templates for each exercise (so students just fill in the blanks), or do you prefer to give them only the descriptions and let them write from scratch?
