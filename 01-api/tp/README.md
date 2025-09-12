@@ -30,21 +30,9 @@ Goal: Simulate CRUD without a database.
 - Create a route /user/{id} returning a hardcoded user.
 Goal: Show structured responses and response_model validation.
 
-⸻
-
 # Exercise 7 – Error Handling
 - Modify one of the CRUD routes so that if a user requests an invalid ID, the API returns:
 
 {"error": "Item not found"}
 
 with status code 404.
-Goal: Learn to raise HTTP exceptions (HTTPException).
-
-⸻
-
-✅ By the end, students will know:
-	•	Path & query parameters
-	•	Request/response bodies
-	•	Pydantic models
-	•	CRUD-like patterns in memory
-	•	Error handling & status codes
