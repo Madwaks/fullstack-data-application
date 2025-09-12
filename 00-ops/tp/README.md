@@ -25,9 +25,11 @@
 ### Create your own container
 
 1. In `./tp/front`, build and start the container with port 8080 exposed
-2. Browse `localhost:8080`
-3. Open a shell in the container using: `docker exec -it`. See [docs](https://docs.docker.com/engine/reference/commandline/exec/#run-docker-exec-on-a-running-container).
-4. Kill the container
+2. Browse `localhost:8080` (_You will notice that the front service cannot access the api_ )
+3. Create a docker network and attach both api and front containers to this newly created network
+   - by default, when running a container, docker creates its own network for each `docker run` command. When running multiple `docker run` commands, each container will be invisible to each other
+4. Open a shell in the container using: `docker exec -it`. See [docs](https://docs.docker.com/engine/reference/commandline/exec/#run-docker-exec-on-a-running-container).
+5. Kill the container
 
 ### Container orchestration
 
