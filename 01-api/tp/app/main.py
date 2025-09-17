@@ -39,7 +39,6 @@ class Numbers(BaseModel):
 
 @app.post("/sum")
 def sum_numbers(payload: Numbers):
-    # TODO: return {"result": payload.a + payload.b}
     pass
 
 
@@ -48,11 +47,6 @@ def sum_numbers(payload: Numbers):
 # -----------------------------
 @app.get("/items/{item_id}")
 def get_item_with_details(item_id: int, details: bool = False):
-    # TODO:
-    # if details:
-    #    return {"item_id": item_id, "description": "More details here"}
-    # else:
-    #    return {"item_id": item_id}
     pass
 
 

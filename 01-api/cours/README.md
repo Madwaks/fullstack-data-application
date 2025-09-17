@@ -182,32 +182,4 @@ async def root():
 
 ```
 
-### Tornado
-
-Tornado est aussi un framework web mais aussi une librairie de gestion réseau asynchrone. Tornado permet de gérer un très grand nombre de connexions simultanées, contrairement à Flask par exemple. Tornado est donc utilisé quand on développe des applications très grosses qui ont besoin de grossir très rapidement. 
-
-#### Example 
-
-```python
-
-import tornado.ioloop
-import tornado.web
-
-class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.write("Hello, world")
-
-def make_app():
-    return tornado.web.Application([
-        (r"/", MainHandler),
-    ])
-
-if __name__ == "__main__":
-    app = make_app()
-    app.listen(8888)
-    tornado.ioloop.IOLoop.current().start()
-
-
-```
-
 ## [Suite](ARCHITECURE.md)

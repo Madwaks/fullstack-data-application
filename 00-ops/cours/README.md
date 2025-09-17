@@ -130,6 +130,7 @@ Display container logs and follow them
 docker logs -f container_name
 ```
 
+
 ## Exec
 
 You can "go inside" a container using the exec command.
@@ -139,6 +140,68 @@ docker exec -it container_name bash
 Note: `-it` stands for interactive
 
 Exit with `CTRL-D`
+
+## Volumes
+
+Docker volumes are used for persisting data, sharing data between containers, and sharing data between the host and containers.
+
+There are three main types of Docker volumes:
+
+- **Named volumes**: These are managed by Docker and have a specific name. They are created and managed independently of containers, and can be easily reused by multiple containers.
+- **Anonymous volumes**: These are created when you mount a volume without specifying a name. Docker assigns them a random name. They are useful for temporary data, but are harder to manage since you don't control their name.
+- **Bind mounts**: These map a directory or file from your host machine directly into the container. Useful for development (e.g., mapping your code into a container), but less portable than named volumes.
+
+### What are volumes for?
+
+- **Data persistence**: Data stored in volumes is not deleted when the container is removed. This allows you to keep your databases, files, or user uploads even if you recreate or delete the container.
+- **Sharing data**: Volumes can be shared between multiple containers, making it easy to share files or state.
+- **Host-container communication**: Bind mounts let you access files from your host machine inside the container, which is especially useful for development.
+
+### Managing volumes
+
+- **Create a named volume**:
+  ```
+  docker volume create my_volume
+  ```
+
+- **List all volumes**:
+  ```
+  docker volume ls
+  ```
+
+- **Inspect a volume** (to see its details and location on disk):
+  ```
+  docker volume inspect my_volume
+  ```
+
+### Using volumes with containers
+
+- **Attach a named volume**:
+  ```
+  docker run -v my_volume:/path/in/container image_name
+  ```
+  This mounts the Docker-managed volume `my_volume` to `/path/in/container` inside the container.
+
+- **Attach a bind mount (host folder)**:
+  ```
+  docker run -v /host/path:/path/in/container image_name
+  ```
+  This mounts the host directory `/host/path` to `/path/in/container` inside the container.
+
+### Volume lifecycle and cleanup
+
+- **Persistence**: Volumes survive container removal. If you delete a container, the data in the volume is not deleted.
+- **Removing volumes**: To delete a volume explicitly, use:
+  ```
+  docker volume rm my_volume
+  ```
+- **Prune unused volumes**: To remove all volumes not used by any container:
+  ```
+  docker volume prune
+  ```
+  Be careful: this deletes all unused volumes and their data.
+
+For more information, see the [Docker documentation on volumes](https://docs.docker.com/storage/volumes/).
 
 ## Docker Compose
 

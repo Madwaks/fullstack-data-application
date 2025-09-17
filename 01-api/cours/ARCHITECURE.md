@@ -120,8 +120,8 @@ Il y a de nombreuses manières de communiquer de la données avec l'API.
 - Request Body
 
 
-## Schemas
-Les schémas sont un moyen de garantir la validité des données utilisées par l'application. Les données provenant des utilisateurs sont souvent incomplètes ou ne correspondent pas aux attentes de votre application. Les schémas de données sont utilisés pour valider le bon format, le bon remplissage des champs de vos objets. 
+## Serializer
+Les serializers sont un moyen de garantir la validité des données utilisées par l'application. Les données provenant des utilisateurs sont souvent incomplètes ou ne correspondent pas aux attentes de votre application. Les serializers de données sont utilisés pour valider le bon format, le bon remplissage des champs de vos objets. 
 Vous pouvez par exemple :
 - Que l'age est bien un nombre entier compris entre 18 et 99 ans 
 - Valider une adresse email
@@ -134,7 +134,7 @@ Vous pouvez par exemple :
 Toutes ces validations, permettent de garantir une cohérence des données échangées. Ce format d'échange de données entre le front (les utilisateurs) et le back (votre application) ou entre deux backs avec une application tierce.
   
 - Serialization (Load) : 
-Permet de déterminer comment est ce que la donnée brute va être traitée par le schéma. La donnée brute est ingérée par le schéma, traitée par les règles définies et produit un objet Python utilisable. 
+Permet de déterminer comment est ce que la donnée brute va être traitée par le serializer. La donnée brute est ingérée par le serializer, traitée par les règles définies et produit un objet Python utilisable. 
 Certains champs ne pourront pas être modifié par l'utilisateur, par exemple l'identifiant géré par la base de données ou la date de création de l'objet seront souvent des champs qui seront impossible à modifier et qui seront ignorés par cette phase de serialisation.
 - Deserialization (Dump)
 La Déserialization permet de traduire un objet métier afin de le partager avec vos utilisateurs ou avec une application tierce. Cette phase permet de transformer des données pour les rendre interpretable par des utilisateurs exterieurs. 
@@ -245,7 +245,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
 BaseSQL = declarative_base()
 ```
 
-Lors de la première synchronisation avec la base de données, SQLAlchemy doit pouvoir créer le schéma de données en base. C'est à dire créer les tables et les colonnes avec les types correspondants. Pour cela nous devons appeler une méthode à l'initiation de FastAPI.
+Lors de la première synchronisation avec la base de données, SQLAlchemy doit pouvoir créer le serializer de données en base. C'est à dire créer les tables et les colonnes avec les types correspondants. Pour cela nous devons appeler une méthode à l'initiation de FastAPI.
 
 ```python
 from .models import BaseSQL
@@ -268,7 +268,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from datetime import datetime
-from .. import models, schemas
+from .. import models, serializers
 
 
 def get_post_by_id(post_id: str, db: Session) -> models.Post:
@@ -289,9 +289,9 @@ from typing import List
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from datetime import datetime
-from .. import models, schemas
+from .. import models, serializers
 
-def create_post(db: Session, post: schemas.Post) -> models.Post:
+def create_post(db: Session, post: serializers.Post) -> models.Post:
     record = db.query(models.Post).filter(models.Post.id == post.id).first()
     if record:
         raise HTTPException(status_code=409, detail="Already exists")
@@ -304,7 +304,7 @@ def create_post(db: Session, post: schemas.Post) -> models.Post:
 
 ```
 
-On peut remarquer qu'ici l'entrée du service sera le schéma du Post envoyé par l'utilisateur. Ici le service récupère donc un objet Post déjà validé, propre et prêt à être utilisé. 
+On peut remarquer qu'ici l'entrée du service sera le serializer du Post envoyé par l'utilisateur. Ici le service récupère donc un objet Post déjà validé, propre et prêt à être utilisé. 
 
 
 ### Headers
@@ -340,7 +340,7 @@ Ces codes sont là pour communiquer de façon simple avec l'exterieur, ils perme
 #### Les erreurs
 	
 - 400 : Bad Request - La syntaxe de la requête est erronée.
-Par exemple il manque des données dans le formulaire, le schéma après sa validation va renvoyer directement une erreur 400 car les données sont éronées. 
+Par exemple il manque des données dans le formulaire, le serializer après sa validation va renvoyer directement une erreur 400 car les données sont éronées. 
 - 401 : Unauthorized - Une authentification est nécessaire pour accéder à la ressource.
 Si l'utilisateur essaye d'accéder à une ressource sans être connecté. 
 - 402 : Payment Required - Paiement requis pour accéder à la ressource.
