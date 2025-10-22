@@ -1,0 +1,10 @@
+fastapi
+pydantic
+sqlalchemy
+uvicorn
+psycopg2
+pyjwt
+pytest
+pytest-asyncio
+pytest-cov
+httpx
